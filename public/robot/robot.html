@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanilla Three.js Scene</title>
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    canvas {
+      display: block;
+      cursor: pointer;
+    }
+    #overlay-text {
+      position: absolute; 
+          bottom:0; 
+          right:0; 
+          display:flex; 
+          text-align: right; 
+          padding-right: 15px;
+          color:#ffffff;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<!-- <div>
+  <p id="overlay-text">Click and drag to orbit</p> 
+</div> -->
+
+<!-- This importmap tells the browser where to find Three.js modules -->
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.164.1/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.164.1/examples/jsm/"
+    }
+  }
+</script>
+
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+// 1. Scene Setup
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0000);
+
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(1, 3, 4.5);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+document.body.appendChild(renderer.domElement);
+
+// Model reference
+let model = null;
+let isDragging = false;
+let mouseX = 0;
+let mouseY = 0;
+let isOverCanvas = false;
+// let isResetting = false;
+let leaveTime = 0;
+const rampDuration = 1000; // ramp-up time in ms (1 second)
+
+// 2. Controls
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.target.set(0, 2.5, 0);
+controls.minDistance = 3;
+controls.maxDistance = 8;
+controls.update();
+
+// Mouse movement tracking - inside canvas
+document.addEventListener('mousemove', (event) => {
+  const bounds = renderer.domElement.getBoundingClientRect();
+  mouseX = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+  mouseY = ((event.clientY - bounds.top) / bounds.height) * 2 - 1;
+});
+// Mouse movement tracking outside of canvas
+window.parent.document.addEventListener('mousemove', (event) => {
+  const bounds = renderer.domElement.getBoundingClientRect();
+
+  // Get mouse position relative to center of window instead of just canvas
+  const parentWidth = window.parent.innerWidth;
+  const parentHeight = window.parent.innerHeight;
+
+  mouseX = (event.clientX / parentWidth) * 2 - 1;
+  mouseY = (event.clientY / parentHeight) * 2 - 1;
+
+});
+
+//reset rotation when mouse is outside of canvas/iframe
+renderer.domElement.addEventListener('mouseenter', () => {
+  isOverCanvas = true;
+  leaveTime = 0; 
+  // isResetting = false;
+});
+
+renderer.domElement.addEventListener('mouseleave', () => {
+  if (isOverCanvas) {
+    // Reset rotation once when leaving
+    // isResetting = true; 
+    // model.rotation.x = 0;
+    // model.rotation.y = 0;
+    leaveTime = performance.now();
+    isOverCanvas = false;
+  }
+});
+
+// Detect when OrbitControls is active
+controls.addEventListener('start', () => { isDragging = true; });
+controls.addEventListener('end', () => { isDragging = false; });
+
+// 3. Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 2.5);
+scene.add(ambientLight);
+
+//Light1
+  // const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8);
+  // directionalLight.position.set(2.5, 8, 5);
+  // directionalLight.castShadow = true;
+  // scene.add(directionalLight);
+
+//Light2
+  const light = new THREE.DirectionalLight(0xffffff, 1);
+  light.position.set(2.5, 12, 5);
+  light.castShadow = true;
+
+  // Set shadow map size **right after** creating the light and enabling shadows
+  light.shadow.mapSize.width = 2048;
+  light.shadow.mapSize.height = 2048;
+
+  // Optional tweak for softer shadows
+  light.shadow.radius = 20;
+  // light.shadow.bias = -0.0005;
+
+  scene.add(light);
+
+// 4. Ground Plane
+// const planeGeometry = new THREE.PlaneGeometry(100, 100);
+// const planeMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+// const ground = new THREE.Mesh(planeGeometry, planeMaterial);
+// ground.rotation.x = -Math.PI / 2;
+// ground.position.y = -2;
+// ground.receiveShadow = true;
+// scene.add(ground);
+const alphaMap = new THREE.TextureLoader().load('./Radial_Gradient-inverted.png');
+const material = new THREE.MeshStandardMaterial({
+  color: 0x000000,
+  transparent: true,
+  alphaMap: alphaMap,
+  depthWrite: false,
+});
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(10, 10), material);
+plane.rotation.x = -Math.PI / 2
+plane.position.y = -1;
+plane.receiveShadow = true;
+scene.add(plane);
+
+
+
+// 5. Model Loading
+const loader = new GLTFLoader();
+loader.load(
+  "./RobotAssistantReimport002.glb",
+  (gltf) => {
+    model = gltf.scene; // ✅ assign to outer variable
+    model.position.set(0, 0, 0);
+    model.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+    scene.add(model);
+  },
+  undefined,
+  (error) => console.error("An error happened while loading the model:", error)
+);
+
+// 6. Animation Loop
+
+/*
+function animate(timestamp = 0) {
+  requestAnimationFrame(animate);
+
+  if (model && !isDragging) {
+    if (isResetting) {
+      // Dampen rotation back to zero gradually
+      model.rotation.x += (0 - model.rotation.x) * 0.1;
+      model.rotation.y += (0 - model.rotation.y) * 0.01;
+
+      // Stop resetting when close enough to zero
+      if (Math.abs(model.rotation.x) < 0.001 && Math.abs(model.rotation.y) < 0.001) {
+        model.rotation.x = 0;
+        model.rotation.y = 0;
+        isResetting = false;
+      }
+    } else {
+      // Normal rotation following mouse
+      const targetRotationY = mouseX * 0.5;
+      const targetRotationX = -mouseY * -0.2;
+
+      model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
+      model.rotation.x += (targetRotationX - model.rotation.x) * 0.03;
+    }
+  }
+
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+*/
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  const now = performance.now();
+  let speedFactor = 1;
+
+  if (!isOverCanvas && leaveTime) {
+    const elapsed = now - leaveTime;
+    speedFactor = Math.min(elapsed / rampDuration, 1);
+  }
+
+
+
+  if (model && !isDragging) {
+    const targetRotationY = mouseX * 0.5;
+    const targetRotationX = -mouseY * -0.2;
+
+    model.rotation.y += (targetRotationY - model.rotation.y) * 0.05 * speedFactor;
+    model.rotation.x += (targetRotationX - model.rotation.x) * 0.05 * speedFactor;
+  }
+
+// if (!isOverCanvas && leaveTime) {
+//   const elapsed = now - leaveTime;
+
+//   if (elapsed >= 1000) {
+//     camera.position.set(1, 3, 4.5);
+//     controls.target.set(0, 2.5, 0);   // Reset target too, so camera looks at the model's center
+//     controls.update();                // Apply the reset immediately
+//   }
+// }
+// Reset orbit position 1 second after mouseleave, with animation lerp
+if (!isOverCanvas && leaveTime) {
+  const elapsed = now - leaveTime;
+
+  if (elapsed >= 1000) {
+    // Define start position and target locally
+    const startPosition = new THREE.Vector3(1, 3, 4.5);
+    const startTarget = new THREE.Vector3(0, 2.5, 0);
+
+    // Lerp camera position toward startPosition (5% per frame)
+    camera.position.lerp(startPosition, 0.01);
+
+    // Lerp controls target toward startTarget (5% per frame)
+    controls.target.lerp(startTarget, 0.05);
+
+    controls.update();
+
+    // Optional: if close enough, snap exactly and stop lerping
+    if (camera.position.distanceTo(startPosition) < 0.01 &&
+        controls.target.distanceTo(startTarget) < 0.01) {
+      camera.position.copy(startPosition);
+      controls.target.copy(startTarget);
+      controls.update();
+      leaveTime = null; // Clear leaveTime to stop running this block
+    }
+  }
+}
+
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+animate();
+
+// Handle window resizing
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+  </body>
+</html>

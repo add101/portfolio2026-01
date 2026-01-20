@@ -1,0 +1,49 @@
+[
+  {
+    "videoUrl": "https://youtu.be/1kqp0ui9haw",
+    "title": "Mødernist Furniture",
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop"
+    ],
+    "articleHeading": "Mødernist Furniture",
+    "articleText": "<p>This project showcases a real-time virtual reality experience of a modern interior space. Users can freely navigate the environment, interact with objects, and appreciate the design in a fully immersive 3D setting.</p>"
+  },
+
+  {
+    "videoUrl": "images/gallery/OLD-KHAKI-MENLYN-10-FEATURE-WALL--4c-Option-1.jpg",
+    "title": "Old Khaki",
+    "galleryImages": [
+      "images/gallery/OLD-KHAKI-MENLYN-10-FEATURE-WALL--4c-Option-1.jpg",
+      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop"
+    ],
+    "articleHeading": "Old Khaki Flagship",
+    "articleText": "<p>While working at Dakota Design, I collaborated with the interior design team from the early concept stages of Old Khaki’s new flagship store rollout. My role spanned from creating initial whitebox models through to detailed stock and custom clothing assets (some built in Marvelous Designer). I led the visualisation process, iterating on design options and producing high-quality renders for presentations and final design approval. This included material development, lighting, and post-production, supported by colleagues across the team.</p>"
+  },
+
+  {
+    "videoUrl": "https://www.youtube.com/embed/nx20lcvmEF4",
+    "title": "VR Interior Project",
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop"
+    ],
+    "articleHeading": "Immersive Architectural Visualization",
+    "articleText": "<p>This project showcases a real-time virtual reality experience of a modern interior space. Users can freely navigate the environment, interact with objects, and appreciate the design in a fully immersive 3D setting.</p>"
+  },
+
+  {
+    "videoUrl": "https://www.youtube.com/embed/WuzcxDkbx4U",
+    "title": "AI-Powered Design System",
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop"
+    ],
+    "articleHeading": "Revolutionizing User Experience",
+    "articleText": "<p>This comprehensive design system leverages artificial intelligence to create consistent, accessible, and beautiful user interfaces across multiple platforms.</p><p>The project began with extensive research into user behavior patterns and design principles, leading to the development of a sophisticated component library that adapts to user preferences and accessibility needs.</p><p>This is the end of the text for the second project.</p>"
+  }
+]
