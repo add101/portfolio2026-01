@@ -142,6 +142,10 @@ nav {
     width: 100%;
 }
 
+
+#background-hero {
+    background: radial-gradient( #1d2b4f 0%, #000000 100%);  
+}
 /* Hero Section */
 .hero {
     height: 100vh;
@@ -151,7 +155,7 @@ nav {
     text-align: left;
     position: relative;
     z-index: 2;
-    background: radial-gradient( #1d2b4f 0%, #000000 100%);
+
 }
 
 .hero-content {
@@ -160,7 +164,10 @@ nav {
     width: 60%;
     /* max-width: 800px; */
     /* padding: 0 40px; */
-    top: 0;
+    top: 0;padding: 3rem;
+    border-radius: 30px;    
+    background: rgba(3, 3, 3, 0.5);  
+    backdrop-filter: blur(5px);
 }
 
 .hero-content-box {
@@ -177,10 +184,10 @@ nav {
 }
 
 .hero h1 {
-    font-size: clamp(3rem, 8vw, 4rem);
+    font-size: (4vw);
     font-weight: 800;
     margin-bottom: 20px;
-    animation: fadeInUp 1s ease-out;
+    animation: fadeInUp 5s ease-out;
     color: #ffffff;
 }
 
@@ -189,7 +196,7 @@ nav {
 }
 
 .typed-text {
-    font-size: 5vw;
+    font-size: 3vw;
     background: linear-gradient(45deg, #38ffd0, #4db9fc, #00fbff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -198,12 +205,14 @@ nav {
 }
 
 .cursor {
+    font-size: 3vw;
     display: inline-block;
     background: #64ffda;
     margin-left: 3px;
     width: 3px;
     height: 0.75em;
     animation: blink 1s infinite;
+    bottom: 0;
 }
 
 .cursor.typing {
@@ -349,7 +358,7 @@ nav {
 
 /* Portfolio Preview */
 .portfolio-preview {
-    padding: 0 0 40px 40px;
+    /* padding: 0 0 40px 40px; */
     /* background: rgba(0, 0, 0, 0.3); */
     position: relative;
     z-index: 2;

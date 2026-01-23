@@ -113,46 +113,6 @@ export default function Home() {
     setIsMenuActive(false);
   };
 
-  useEffect(() => {
-    const roles = ['3D Artist', 'Visual Developer', 'Immersive Creator'];
-    let currentRoleIndex = 0;
-    let currentCharIndex = 0;
-    let isDeleting = false;
-    let isWaiting = false;
-
-    const typeWriter = () => {
-      const currentRole = roles[currentRoleIndex];
-
-      if (isWaiting) {
-        setTimeout(typeWriter, 2000);
-        isWaiting = false;
-        return;
-      }
-
-      if (!isDeleting && currentCharIndex < currentRole.length) {
-        setCursorClass('typing');
-        setTypedText(currentRole.substring(0, currentCharIndex + 1));
-        currentCharIndex++;
-        setTimeout(typeWriter, 100 + Math.random() * 50);
-      } else if (isDeleting && currentCharIndex > 0) {
-        setCursorClass('typing');
-        setTypedText(currentRole.substring(0, currentCharIndex - 1));
-        currentCharIndex--;
-        setTimeout(typeWriter, 50 + Math.random() * 25);
-      } else if (!isDeleting && currentCharIndex === currentRole.length) {
-        setCursorClass('');
-        isWaiting = true;
-        isDeleting = true;
-        setTimeout(typeWriter, 2000);
-      } else if (isDeleting && currentCharIndex === 0) {
-        isDeleting = false;
-        currentRoleIndex = (currentRoleIndex + 1) % roles.length;
-        setTimeout(typeWriter, 500);
-      }
-    };
-
-    setTimeout(typeWriter, 1000);
-  }, []);
 
   useEffect(() => {
     if (isModalOpen || isGalleryModalOpen) {
