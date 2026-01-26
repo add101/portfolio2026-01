@@ -26,16 +26,17 @@ export default function Home() {
   const galleryImages = [
     '/images/gallery/Cocoabean_Hotel_Interior-02.jpg',
     '/images/gallery/Cocoabean_Hotel_iz-Atrium.jpg',
-    '/images/gallery/Bay-of-shells-4-bedr-unit0000.jpg',
+    '/images/gallery/01-Holborn-Gate-Reception.jpg',
     '/images/gallery/08 3D Rendering - Canteen Renovation Nottingham.jpg',
     '/images/gallery/02 3D Rendering - House Zero - House Ivy - Pretoria.jpg',
     '/images/gallery/01  3D Rendering - House Zero - Queenswood Pretoria.jpg',
     '/images/gallery/19-NGV-Night.jpg',
     '/images/gallery/CONFERENCE-PRE-ASSEMBLY.jpg',
     '/images/gallery/13 3D Visualisation - Gautrain Midrand Urban Study Area.jpg',
-    '/images/gallery/14 3D Visualisation - Gautrain Midrand Urban Study Area.jpg',
-    '/images/gallery/15 3D Visualisation - Gautrain Midrand Urban Study Area.jpg',
-    '/images/gallery/16 3D Visualisation - Gautrain Midrand Urban Study Area.jpg'
+    '/images/gallery/13-2017-11-22-05-Open-Plan.jpg',
+    '/images/gallery/15 3D Rendering - Nandos Restaurant.jpg',
+    '/images/gallery/OLD_TOWN_002_DiningBar.jpg',
+    '/images/gallery/Hotel-Roca-Norte-Lobby-Bar-02.jpg'
   ];
 
   const openGalleryModal = (index: number) => {

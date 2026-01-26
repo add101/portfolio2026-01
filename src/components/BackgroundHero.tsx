@@ -53,11 +53,11 @@ const GridBackground = () => {
     });
 
     // Noise function for terrain-like hills
-    const getTerrainHeight = (x, z, scrollProgress) => {
+    const getTerrainHeight = (x: number, z: number, scrollProgress: number) => {
       // Adjustable parameters for the noise pattern
-      const amplitude = 3;      // Height of the hills
-      const frequency = 0.1;    // How often hills appear
-      const octaves = 3;        // Layers of detail
+      const amplitude = 1.4;      // Height of the hills
+      const frequency = 0.45;    // How often hills appear
+      const octaves = 2;        // Layers of detail
       
       let height = 0;
       let amp = amplitude;
@@ -70,9 +70,27 @@ const GridBackground = () => {
         amp *= 0.5;
         freq *= 2;
       }
+
+      // Ensure positive heights only
+      height = Math.max(0, height); // Clamp to minimum of 0
       
       // Scale height based on scroll progress (0 = flat, 1 = full height)
-      return height * scrollProgress;
+
+      // Mask for flat middle section (30% of total width)
+      const flatRadius = (totalSize * 0.01) / 2;
+      const transition = 8; // Smooth transition area
+      
+      let mask = 0;
+      const absZ = Math.abs(z);
+      
+      if (absZ > flatRadius) {
+        // Calculate transition from 0 to 1
+        const t = Math.min((absZ - flatRadius) / transition, 1);
+        // Smoothstep for organic transition
+        mask = t * t * (3 - 2 * t);
+      }
+
+      return height * scrollProgress * mask;
     };
 
 
@@ -177,6 +195,29 @@ const GridBackground = () => {
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
+
+      const progress = scrollProgressRef.current;
+
+      // Update horizontal lines
+      horizontalLines.forEach(line => {
+        const positions = line.geometry.attributes.position.array;
+        for (let i = 0; i < line.points.length; i++) {
+          const point = line.points[i];
+          // Update Y (index i*3 + 1) based on original X, Z and current scroll progress
+          positions[i * 3 + 1] = getTerrainHeight(point.x, point.z, progress);
+        }
+        line.geometry.attributes.position.needsUpdate = true;
+      });
+
+      // Update vertical lines
+      verticalLines.forEach(line => {
+        const positions = line.geometry.attributes.position.array;
+        for (let i = 0; i < line.points.length; i++) {
+          const point = line.points[i];
+          positions[i * 3 + 1] = getTerrainHeight(point.x, point.z, progress);
+        }
+        line.geometry.attributes.position.needsUpdate = true;
+      });
 
       // Subtle rotation
     //   if (gridRef.current) {

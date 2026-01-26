@@ -29,10 +29,13 @@ export default function Hero() {
       <section className="hero" id="home">
         <div className="hero-content">
           <h1><span className="typing-container"><span className="typed-text">{typedText}</span><span className="cursor"></span></span></h1>
-          <p className="subtitle">3D Artist • Web Developer • VR Designer</p>
+          {/* <p className="subtitle">Building interactive systems that connect ideas and people</p> */}
+          {/* <p className="description">
+            I create spaces where ideas can be explored, interacted with, and felt. From digital interfaces and motion graphics to games and immersive systems, I combine design, code, and spatial thinking to turn concepts into experiences.
+          </p> */}
+          <p className="subtitle">Pixels in motion, ideas in play</p>
           <p className="description">
-            Crafting immersive digital experiences through cutting-edge 3D visualisation,
-            modern web development, and virtual reality innovation.
+            I combine design, code, and interaction to bring concepts to life. Websites, apps, games, and interactive media - all engineered to engage, inform, and delight.
           </p>
         </div>
         {/* <div className="hero-threejs-container">
