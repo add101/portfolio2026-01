@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 const GridBackground = () => {
-  const canvasRef = useRef(null);
-  const sceneRef = useRef(null);
-  const cameraRef = useRef(null);
-  const rendererRef = useRef(null);
-  const gridRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const gridRef = useRef<THREE.Group | null>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const scrollProgressRef = useRef(0);
 
@@ -163,10 +163,10 @@ updateOpacityOnScroll();
     //   gridGroup.add(line);
     // }
 
-    const horizontalLines = [];
+    const horizontalLines: { geometry: THREE.BufferGeometry; points: { x: number; z: number }[] }[] = [];
     for (let i = 0; i <= gridSize; i++) {
       const geometry = new THREE.BufferGeometry();
-      const points = [];
+      const points: THREE.Vector3[] = [];
       const segments = 50; // Number of points along the line for smooth curves
       
       for (let j = 0; j <= segments; j++) {
@@ -195,10 +195,10 @@ updateOpacityOnScroll();
     // }
 
     // Vertical lines with terrain
-    const verticalLines = [];
+    const verticalLines: { geometry: THREE.BufferGeometry; points: { x: number; z: number }[] }[] = [];
     for (let i = 0; i <= gridSize; i++) {
       const geometry = new THREE.BufferGeometry();
-      const points = [];
+      const points: THREE.Vector3[] = [];
       const segments = 50;
       
       for (let j = 0; j <= segments; j++) {
@@ -223,7 +223,7 @@ updateOpacityOnScroll();
     scene.add(light);
 
     // Mouse tracking
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouseRef.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };

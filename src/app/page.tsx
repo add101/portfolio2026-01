@@ -13,8 +13,6 @@ import GalleryModal from '../components/GalleryModal';
 import Contact from '../components/Contact';
 
 export default function Home() {
-  const [typedText, setTypedText] = useState('');
-  const [cursorClass, setCursorClass] = useState('');
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projectsData, setProjectsData] = useState<any[]>([]);
@@ -133,10 +131,7 @@ export default function Home() {
         toggleMenu={toggleMenu}
         closeMenu={closeMenu}
       />
-      <Hero
-        typedText={typedText}
-        cursorClass={cursorClass}
-      />
+      <Hero />
       <Skills />
       {/* <CaseStudies openModalCaseStudy={openModalCaseStudy} />
       {isModalOpen && (
