@@ -45,12 +45,69 @@ const GridBackground = () => {
     const totalSize = gridSize * spacing;
     const offset = totalSize / 2;
 
-    // Material for glowing lines
+    
+    // Material for glowing lines - fades on scroll
+    // let lineMaterialOpacity = 0.6;
+    // const lineMaterial = new THREE.LineBasicMaterial({
+    //   color: 0x00ffaa,
+    //   transparent: true,
+    //   opacity: lineMaterialOpacity
+    // });
+
+    // Material for glowing lines - fades on scroll
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0x00ffaa,
       transparent: true,
       opacity: 0.6
     });
+
+    // Scroll-based opacity control
+    function updateOpacityOnScroll() {
+  const scrollY = window.scrollY;
+  const viewportHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+  const maxScroll = documentHeight - viewportHeight;
+  
+  // Fade out after 2 pages of scroll
+  const fadeOutStart = viewportHeight * 2;
+  const fadeOutDuration = viewportHeight * 0.375;
+  
+  // Fade back in on last page
+  const fadeInStart = maxScroll - viewportHeight;
+  const fadeInDuration = viewportHeight * 0.375; // Same duration, adjust as needed
+  
+  let opacity: number;
+  
+  if (scrollY < fadeOutStart) {
+    // Beginning - full opacity
+    opacity = 0.6;
+  } else if (scrollY < fadeOutStart + fadeOutDuration) {
+    // Fading out - linear from 0.6 to 0
+    const fadeProgress = (scrollY - fadeOutStart) / fadeOutDuration;
+    opacity = 0.6 * (1 - fadeProgress);
+  } else if (scrollY < fadeInStart) {
+    // Middle section - zero opacity
+    opacity = 0;
+  } else if (scrollY < fadeInStart + fadeInDuration) {
+    // Fading back in - linear from 0 to 0.6
+    const fadeProgress = (scrollY - fadeInStart) / fadeInDuration;
+    opacity = 0.3 * fadeProgress;
+  } else {
+    // End - full opacity
+    opacity = 0.3;
+  }
+  
+  lineMaterial.opacity = opacity;
+}
+
+document.addEventListener('scroll', updateOpacityOnScroll);
+updateOpacityOnScroll();
+
+    // Add the scroll listener
+    document.addEventListener('scroll', updateOpacityOnScroll);
+
+    // Call once on load to set initial state
+    updateOpacityOnScroll();
 
     // Noise function for terrain-like hills
     const getTerrainHeight = (x: number, z: number, scrollProgress: number) => {

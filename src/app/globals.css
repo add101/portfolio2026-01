@@ -146,6 +146,7 @@ nav {
 #background-hero {
     background: radial-gradient( #1d2b4f 0%, #000000 100%);  
 }
+
 /* Hero Section */
 .hero {
     height: 100vh;
@@ -166,7 +167,7 @@ nav {
     /* padding: 0 40px; */
     top: 0;padding: 3rem;
     border-radius: 30px;    
-    background: rgba(3, 3, 3, 0.5);  
+    background: rgba(3, 3, 3, 0.4);  
     backdrop-filter: blur(5px);
 }
 
@@ -745,6 +746,17 @@ iframe {
         top: 100px;
     }
 
+    .hero-content {
+        
+    margin:20px;
+    margin-top: 200px;
+    width: 90%;
+    top: 0;padding: 3rem;
+    border-radius: 30px;    
+    background: rgba(3, 3, 3, 0.1);  
+    backdrop-filter: blur(5px);
+    }
+
     .hero-threejs {
     /* border-radius: 20px;
     border: none; */
@@ -758,7 +770,13 @@ iframe {
 }
 
     .typing-container {
-        font-size: 50%;
+        font-size: 2rem;
+    }
+
+    .typed-text {
+    font-size: 100%;
+    
+    transition: all 0.3s ease;
     }
 
     .skills {
@@ -813,6 +831,7 @@ iframe {
      flex-direction: column;
      margin-top: 150px;
      margin-bottom: 10px;
+     background: rgba(255, 255, 255, 1)
 }
 
 

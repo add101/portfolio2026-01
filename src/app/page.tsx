@@ -138,7 +138,7 @@ export default function Home() {
         cursorClass={cursorClass}
       />
       <Skills />
-      <CaseStudies openModalCaseStudy={openModalCaseStudy} />
+      {/* <CaseStudies openModalCaseStudy={openModalCaseStudy} />
       {isModalOpen && (
         <CaseStudyModal
           isModalOpen={isModalOpen}
@@ -150,7 +150,7 @@ export default function Home() {
           prevImageCaseStudy={prevImageCaseStudy}
           nextImageCaseStudy={nextImageCaseStudy}
         />
-      )}
+      )} */}
       <Gallery
         galleryImages={galleryImages}
         openGalleryModal={openGalleryModal}
