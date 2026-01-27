@@ -1,6 +1,10 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export',
-}
+import type { NextConfig } from "next";
 
-module.exports = nextConfig
+const nextConfig: NextConfig = {
+  output: 'export',
+  images: {
+    unoptimized: true, // Required for static export if not using an external loader
+  },
+};
+
+export default nextConfig;
