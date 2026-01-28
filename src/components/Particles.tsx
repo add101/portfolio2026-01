@@ -3,10 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 export default function Particles() {
-  const containerRef = useRef(null);
-  const sceneRef = useRef(null);
-  const rendererRef = useRef(null);
-  const meshRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const meshRef = useRef<THREE.Points | null>(null);
   
   // State for UI controls
   const [speed, setSpeed] = useState(1);
@@ -63,7 +63,9 @@ export default function Particles() {
       renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Optimize for high DPI screens
-    containerRef.current.appendChild(renderer.domElement);
+    if (containerRef.current) {
+      containerRef.current.appendChild(renderer.domElement);
+    }
     rendererRef.current = renderer;
 
     // ===== GEOMETRY CREATION =====
