@@ -1,42 +1,47 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import Particles2 from './Particles2';
+import { useState, useEffect } from 'react';
+import BackgroundHero from './BackgroundHero';
 
-interface HeroProps {
-  typedText: string;
-  cursorClass: string;
-}
+export default function Hero() {
+  const [typedText, setTypedText] = useState('');
 
-export default function Hero({ typedText, cursorClass }: HeroProps) {
+
+  
+  useEffect(() => {
+    const text = 'Moving pixels with art and code';
+    let index = 0;
+
+    const typeWriter = () => {
+      setTypedText(text.substring(0, index + 1));
+      index++;
+      if (index < text.length) {
+        setTimeout(typeWriter, 100); // speed of typing
+      }
+    };
+
+    typeWriter();
+  }, []);
 
   return (
-    <section className="hero" id="home" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-      <div className="hero-content" style={{ flex: '1 1 500px', maxWidth: '100%' }}>
-        <h1><span className="typing-container"><span className="typed-text">{typedText}</span><span className={`cursor ${cursorClass}`}></span></span></h1>
-        <p className="subtitle">3D Artist • Web Developer • VR Designer</p>
-        <p className="description">
-          Crafting immersive digital experiences through cutting-edge 3D visualisation,
-          modern web development, and virtual reality innovation.
-        </p>
-      </div>
-      
-      <div className="particles-wrapper">
-        <Particles2 />
-      </div>
-
-      {/* <style jsx>{`
-        .particles-wrapper {
-          flex: 1 1 40%;
-          height: 600px;
-          margin-left: 50px;
-        }
-        @media (max-width: 768px) {
-          .particles-wrapper {
-            display: none;
-          }
-        }
-      `}</style> */}
-    </section>
+    <>
+      <BackgroundHero />
+      <section className="hero" id="home">
+        <div className="hero-content">
+          <h1><span className="typing-container"><span className="typed-text">{typedText}</span><span className="cursor"></span></span></h1>
+          {/* <p className="subtitle">Building interactive systems that connect ideas and people</p> */}
+          {/* <p className="description">
+            I create spaces where ideas can be explored, interacted with, and felt. From digital interfaces and motion graphics to games and immersive systems, I combine design, code, and spatial thinking to turn concepts into experiences.
+          </p> */}
+          <p className="subtitle">Pixels in motion, ideas in play</p>
+          <p className="description">
+            I combine design, code, and interaction to bring concepts to life. Websites, apps, games, and interactive media - all engineered to engage, inform, and delight.
+          </p>
+        </div>
+        {/* <div className="hero-threejs-container">
+          <iframe src="/robot/robot.html" className="hero-threejs" scrolling="no" title="three.js robot assistant"></iframe>
+        </div> */}
+      </section>
+    </>
   );
 }

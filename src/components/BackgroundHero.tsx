@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 const GridBackground = () => {
-  const canvasRef = useRef(null);
-  const sceneRef = useRef(null);
-  const cameraRef = useRef(null);
-  const rendererRef = useRef(null);
-  const gridRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const gridRef = useRef<THREE.Group | null>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const scrollProgressRef = useRef(0);
 
@@ -45,19 +45,76 @@ const GridBackground = () => {
     const totalSize = gridSize * spacing;
     const offset = totalSize / 2;
 
-    // Material for glowing lines
+    
+    // Material for glowing lines - fades on scroll
+    // let lineMaterialOpacity = 0.6;
+    // const lineMaterial = new THREE.LineBasicMaterial({
+    //   color: 0x00ffaa,
+    //   transparent: true,
+    //   opacity: lineMaterialOpacity
+    // });
+
+    // Material for glowing lines - fades on scroll
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0x00ffaa,
       transparent: true,
       opacity: 0.6
     });
 
+    // Scroll-based opacity control
+    function updateOpacityOnScroll() {
+  const scrollY = window.scrollY;
+  const viewportHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+  const maxScroll = documentHeight - viewportHeight;
+  
+  // Fade out after 2 pages of scroll
+  const fadeOutStart = viewportHeight * 2;
+  const fadeOutDuration = viewportHeight * 0.375;
+  
+  // Fade back in on last page
+  const fadeInStart = maxScroll - viewportHeight;
+  const fadeInDuration = viewportHeight * 0.375; // Same duration, adjust as needed
+  
+  let opacity: number;
+  
+  if (scrollY < fadeOutStart) {
+    // Beginning - full opacity
+    opacity = 0.6;
+  } else if (scrollY < fadeOutStart + fadeOutDuration) {
+    // Fading out - linear from 0.6 to 0
+    const fadeProgress = (scrollY - fadeOutStart) / fadeOutDuration;
+    opacity = 0.6 * (1 - fadeProgress);
+  } else if (scrollY < fadeInStart) {
+    // Middle section - zero opacity
+    opacity = 0;
+  } else if (scrollY < fadeInStart + fadeInDuration) {
+    // Fading back in - linear from 0 to 0.6
+    const fadeProgress = (scrollY - fadeInStart) / fadeInDuration;
+    opacity = 0.3 * fadeProgress;
+  } else {
+    // End - full opacity
+    opacity = 0.3;
+  }
+  
+  lineMaterial.opacity = opacity;
+}
+
+document.addEventListener('scroll', updateOpacityOnScroll);
+updateOpacityOnScroll();
+
+    // Add the scroll listener
+    document.addEventListener('scroll', updateOpacityOnScroll);
+
+    // Call once on load to set initial state
+    updateOpacityOnScroll();
+
     // Noise function for terrain-like hills
-    const getTerrainHeight = (x, z, scrollProgress) => {
+    const getTerrainHeight = (x: number, z: number, scrollProgress: number) => {
       // Adjustable parameters for the noise pattern
-      const amplitude = 3;      // Height of the hills
-      const frequency = 0.1;    // How often hills appear
-      const octaves = 3;        // Layers of detail
+      const amplitude = 1.4;      // Height of the hills
+      const frequency = 0.45;    // How often hills appear
+      const octaves = 2;        // Layers of detail
       
       let height = 0;
       let amp = amplitude;
@@ -70,9 +127,27 @@ const GridBackground = () => {
         amp *= 0.5;
         freq *= 2;
       }
+
+      // Ensure positive heights only
+      height = Math.max(0, height); // Clamp to minimum of 0
       
       // Scale height based on scroll progress (0 = flat, 1 = full height)
-      return height * scrollProgress;
+
+      // Mask for flat middle section (30% of total width)
+      const flatRadius = (totalSize * 0.01) / 2;
+      const transition = 8; // Smooth transition area
+      
+      let mask = 0;
+      const absZ = Math.abs(z);
+      
+      if (absZ > flatRadius) {
+        // Calculate transition from 0 to 1
+        const t = Math.min((absZ - flatRadius) / transition, 1);
+        // Smoothstep for organic transition
+        mask = t * t * (3 - 2 * t);
+      }
+
+      return height * scrollProgress * mask;
     };
 
 
@@ -88,10 +163,10 @@ const GridBackground = () => {
     //   gridGroup.add(line);
     // }
 
-    const horizontalLines = [];
+    const horizontalLines: { geometry: THREE.BufferGeometry; points: { x: number; z: number }[] }[] = [];
     for (let i = 0; i <= gridSize; i++) {
       const geometry = new THREE.BufferGeometry();
-      const points = [];
+      const points: THREE.Vector3[] = [];
       const segments = 50; // Number of points along the line for smooth curves
       
       for (let j = 0; j <= segments; j++) {
@@ -120,10 +195,10 @@ const GridBackground = () => {
     // }
 
     // Vertical lines with terrain
-    const verticalLines = [];
+    const verticalLines: { geometry: THREE.BufferGeometry; points: { x: number; z: number }[] }[] = [];
     for (let i = 0; i <= gridSize; i++) {
       const geometry = new THREE.BufferGeometry();
-      const points = [];
+      const points: THREE.Vector3[] = [];
       const segments = 50;
       
       for (let j = 0; j <= segments; j++) {
@@ -148,7 +223,7 @@ const GridBackground = () => {
     scene.add(light);
 
     // Mouse tracking
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouseRef.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
@@ -177,6 +252,29 @@ const GridBackground = () => {
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
+
+      const progress = scrollProgressRef.current;
+
+      // Update horizontal lines
+      horizontalLines.forEach(line => {
+        const positions = line.geometry.attributes.position.array;
+        for (let i = 0; i < line.points.length; i++) {
+          const point = line.points[i];
+          // Update Y (index i*3 + 1) based on original X, Z and current scroll progress
+          positions[i * 3 + 1] = getTerrainHeight(point.x, point.z, progress);
+        }
+        line.geometry.attributes.position.needsUpdate = true;
+      });
+
+      // Update vertical lines
+      verticalLines.forEach(line => {
+        const positions = line.geometry.attributes.position.array;
+        for (let i = 0; i < line.points.length; i++) {
+          const point = line.points[i];
+          positions[i * 3 + 1] = getTerrainHeight(point.x, point.z, progress);
+        }
+        line.geometry.attributes.position.needsUpdate = true;
+      });
 
       // Subtle rotation
     //   if (gridRef.current) {

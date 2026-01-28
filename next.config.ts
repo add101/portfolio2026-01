@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  // output: 'export', // Uncomment if you need a purely static build (e.g. for GitHub Pages)
+  // images: { unoptimized: true }, // Uncomment for static builds
 };
 
 export default nextConfig;

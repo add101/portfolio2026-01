@@ -12,7 +12,7 @@ export default function Navigation({ isMenuActive, toggleMenu, closeMenu }: Navi
         <ul className={`nav-links ${isMenuActive ? 'active' : ''}`}>
           <li><a href="#home" onClick={closeMenu}>Home</a></li>
           <li><a href="#skills" onClick={closeMenu}>Specialisations</a></li>
-          <li><a href="#portfolio" onClick={closeMenu}>Case Studies</a></li>
+          {/* <li><a href="#portfolio" onClick={closeMenu}>Case Studies</a></li> */}
           <li><a href="#gallery-section" onClick={closeMenu}>Gallery</a></li>
           <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
         </ul>
