@@ -1,6 +1,6 @@
 # Portfolio 2026
 
-A modern portfolio website built with Next.js, showcasing my work and skills.
+A modern portfolio website built with Next.js 
 
 ## 🚀 Tech Stack
 
