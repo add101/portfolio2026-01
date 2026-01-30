@@ -74,10 +74,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         {/* Google tag (gtag.js) */}
         <Script
-          async
           src="https://www.googletagmanager.com/gtag/js?id=G-W6EQ5B3QJM"
           strategy="afterInteractive"
         />
@@ -89,11 +90,6 @@ export default function RootLayout({
             gtag('config', 'G-W6EQ5B3QJM');
           `}
         </Script>
-      </head>
-
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
         {children}
       </body>
     </html>
