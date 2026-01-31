@@ -69,11 +69,11 @@ const GridBackground = () => {
   const maxScroll = documentHeight - viewportHeight;
   
   // Fade out after 2 pages of scroll
-  const fadeOutStart = viewportHeight * 2;
+  const fadeOutStart = viewportHeight * 1.3;
   const fadeOutDuration = viewportHeight * 0.375;
   
   // Fade back in on last page
-  const fadeInStart = maxScroll - viewportHeight;
+  const fadeInStart = maxScroll - (viewportHeight * 0.5);
   const fadeInDuration = viewportHeight * 0.375; // Same duration, adjust as needed
   
   let opacity: number;

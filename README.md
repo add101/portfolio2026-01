@@ -6,6 +6,6 @@ View site at [Portfolio Site](https://www.adrianlamour.com/)
 ## 🚀 Tech Stack
 
 - **Framework:** Next.js
-- **Styling:** Tailwind CSS + DaisyUI
+- **Styling:** Tailwind CSS
 - **3D Elements (Background) :** Three.js
 
