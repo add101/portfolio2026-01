@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { GalleryItem } from '../data/galleryItems';
 
 interface GalleryModalProps {
   isGalleryModalOpen: boolean;
   closeGalleryModal: () => void;
-  galleryImages: string[];
+  galleryItems: GalleryItem[];
   galleryCurrentIndex: number;
   prevGalleryImage: () => void;
   nextGalleryImage: () => void;
@@ -12,7 +13,7 @@ interface GalleryModalProps {
 export default function GalleryModal({
   isGalleryModalOpen,
   closeGalleryModal,
-  galleryImages,
+  galleryItems,
   galleryCurrentIndex,
   prevGalleryImage,
   nextGalleryImage
@@ -58,7 +59,8 @@ export default function GalleryModal({
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
             >
-              <img src={galleryImages[galleryCurrentIndex]} alt={`Gallery image ${galleryCurrentIndex + 1}`} />
+              <img src={galleryItems[galleryCurrentIndex].src} alt={galleryItems[galleryCurrentIndex].description} />
+              <div className="modal-caption">{galleryItems[galleryCurrentIndex].description}</div>
             </div>
             <button className="modal-prev" onClick={prevGalleryImage}>‹</button>
             <button className="modal-next" onClick={nextGalleryImage}>›</button>

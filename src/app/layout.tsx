@@ -60,11 +60,7 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
-  
-  // Verification (add when you set these up)
-  // verification: {
-  //   google: "your-google-verification-code",
-  // },
+
 };
 
 export default function RootLayout({

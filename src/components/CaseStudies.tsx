@@ -6,7 +6,7 @@ export default function CaseStudies({ openModalCaseStudy }: CaseStudiesProps) {
   return (
     <section className="portfolio-preview" id="portfolio">
       <div className="container">
-        <h2 className="section-title">Case Studies</h2>
+        <h2 className="section-title">Featured Projects</h2>
         <div className="portfolio-grid">
           <div className="portfolio-item portfolio-item--clickable" onClick={() => openModalCaseStudy(0)}>
             <div className="portfolio-image">
