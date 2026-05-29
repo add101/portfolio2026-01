@@ -834,12 +834,12 @@ iframe {
     margin: 30px 40px 40px 40px;
     width: calc(96vw - 80px);
     position: sticky;
-    top: 100px;
+    top: 80px;
     z-index: 99;
-    /* background: linear-gradient(180deg, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.9) 100%); */
+    background: linear-gradient(180deg, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.9) 100%);
     padding: 20px 0;
-    /* backdrop-filter: blur(10px); */
-    /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .filter-button {
@@ -887,7 +887,8 @@ iframe {
      margin-top: 150px;
      margin-bottom: 50px;
      padding-bottom: 40px;
-     background: rgba(255, 255, 255, 1);
+     /* Changed to transparent to ensure sticky filters are visible against the main background */
+     background: transparent;
      overflow: visible;
 }
 
@@ -1423,6 +1424,16 @@ iframe {
         width: calc(98vw - 10px);
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(3, 1fr);
+    }
+
+    /* .gallery:hover {
+        width: calc(99vw - 40px);
+        transform: scale(1.01);
+    } */
+    
+    .gallery-filters {
+        margin: 30px 15px 40px 15px; /* Adjust margins for smaller screens */
+        width: calc(100% - 30px); /* Adjust width to account for new margins */
     }
 
     /* .gallery:hover {
