@@ -9,7 +9,6 @@ import CaseStudyModal from '../components/CaseStudyModal';
 import Gallery from '../components/Gallery';
 import Contact from '../components/Contact';
 import CareerHistory from '@/components/CareerHistory';
-import CareerTimeline from '@/components/CareerTimeline';
 
 export default function Home() {
   const [isMenuActive, setIsMenuActive] = useState(false);
