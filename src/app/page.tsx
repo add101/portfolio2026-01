@@ -8,6 +8,8 @@ import CaseStudies from '../components/CaseStudies';
 import CaseStudyModal from '../components/CaseStudyModal';
 import Gallery from '../components/Gallery';
 import Contact from '../components/Contact';
+import CareerHistory from '@/components/CareerHistory';
+import CareerTimeline from '@/components/CareerTimeline';
 
 export default function Home() {
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -92,8 +94,8 @@ export default function Home() {
       />
       <Hero />
       <Skills />
-      <CaseStudies openModalCaseStudy={openModalCaseStudy} />
-      {isModalOpen && (
+      {/* <CaseStudies openModalCaseStudy={openModalCaseStudy} /> */}
+      {/* {isModalOpen && (
         <CaseStudyModal
           isModalOpen={isModalOpen}
           closeModalCaseStudy={closeModalCaseStudy}
@@ -104,8 +106,9 @@ export default function Home() {
           prevImageCaseStudy={prevImageCaseStudy}
           nextImageCaseStudy={nextImageCaseStudy}
         />
-      )}
+      )} */}
       <Gallery />
+      <CareerHistory />
       <Contact />
     </>
   );

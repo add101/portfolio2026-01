@@ -79,10 +79,10 @@ export default function Gallery() {
 
   return (
     <section className="gallery-section" id="gallery-section">
-      <h2 className="section-title">Gallery</h2>
+      {/* <h2 className="section-title">Gallery</h2> */}
       
       {/* Filter Categories */}
-      <div className="gallery-filters">
+      {/* <div className="gallery-filters">
         {categories.map((category) => (
           <button
             key={category.value}
@@ -95,7 +95,7 @@ export default function Gallery() {
             {category.label}
           </button>
         ))}
-      </div>
+      </div> */}
 
       <div className="gallery" id="gallery">
         {displayedItems.map((item, index) => (

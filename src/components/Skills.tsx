@@ -2,7 +2,7 @@ export default function Skills() {
   return (
     <section className="skills" id="skills">
       <div className="container">
-        <h2 className="section-title">Specialisations</h2>
+        {/* <h2 className="section-title">Specialisations</h2> */}
         <div className="skills-grid">
           <div className="skill-card">
             <div className="skill-icon">
