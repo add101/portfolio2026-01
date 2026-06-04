@@ -48,7 +48,7 @@ const JOBS: Job[] = [
 
 ];
 
-export default function CareerHistory(): JSX.Element {
+export default function CareerHistory() {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const wrapRefs = useRef<HTMLDivElement[]>([]);
@@ -159,7 +159,7 @@ export default function CareerHistory(): JSX.Element {
       // cleanup
       return () => {
         mounted = false;
-        stage.removeEventListener("scroll", onScroll);
+        window.removeEventListener("scroll", onScroll);
         window.removeEventListener("resize", measure);
         if (springTween.current) springTween.current.kill();
         gsap.ticker.remove(render);
