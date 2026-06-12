@@ -149,14 +149,32 @@ nav {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 70vh;
+    position: relative;
+    z-index: 2;
+    gap: 0;
+    margin-top: 120px;
+}
+
+.hero-text-content {
+    flex: 0 0 30%;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: left;
-    position: relative;
-    z-index: 2;
+    padding: 60px 40px;
+}
 
+.hero-video-container {
+    flex: 0 0 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .hero-canvas {
@@ -170,28 +188,19 @@ nav {
 }
 
 .hero-content {
-    margin:40px;
-    /* flex: 5; */
-    width: 60%;
-    /* max-width: 800px; */
-    /* padding: 0 40px; */
-    top: 0;padding: 3rem;
-    border-radius: 30px;    
+    width: 100%;
+    padding: 2rem;
+    border-radius: 20px;    
     background: rgba(3, 3, 3, 0.4);  
     backdrop-filter: blur(5px);
 }
 
 .hero-content-box {
-    /* max-width: 300px; */
-    /* flex: 3; */
     width: 35vw;
-    /* width:5vw; */
-    margin:40px;
+    margin: 40px;
     height: 50vh;
     background: grey;
     border-radius: 15px;
-    
-    /* padding: 0 40px; */
 }
 
 .hero h1 {
@@ -200,6 +209,91 @@ nav {
     margin-bottom: 20px;
     animation: fadeInUp 5s ease-out;
     color: #ffffff;
+}
+
+/* Video Styles */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #000;
+}
+
+.hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.video-wrapper:hover .video-overlay {
+    /* opacity: 1; */
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
+    pointer-events: auto;
+}
+
+.fullscreen-btn {
+    background: rgba(100, 255, 218, 0.9);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: #000;
+    position: relative;
+    z-index: 10;
+}
+
+.fullscreen-btn:hover {
+    background: #64ffda;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
+}
+
+.fullscreen-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.video-controls-hint {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.video-wrapper:hover .video-controls-hint {
+    opacity: 1;
 }
 
 .typing-container {
@@ -307,67 +401,130 @@ nav {
 }
 
 .skills-grid {
-    /* display: flex; */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
     margin-bottom: 150px;
+    margin-top: 40px;
+}
+
+@media (max-width: 1024px) {
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .skill-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 30px;
-    transition: all 0.3s ease;
     position: relative;
+    border-radius: 15px;
     overflow: hidden;
-    /* width: 33%; */
+    transition: all 0.4s ease;
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.skill-card .skill-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+.skill-card .sector-image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.skill-card .sector-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.skill-card h3 {
+    position: relative;
+    z-index: 2;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    transition: all 0.4s ease;
 }
 
 .skill-card::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.skill-card:hover::before {
-    left: 100%;
-}
-
-.skill-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 40px rgba(100, 255, 218, 0.2);
-    border-color: rgba(100, 255, 218, 0.3);
-}
-
-.skill-icon {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    background: linear-gradient(45deg, #64ffda, #bb86fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.skill-card h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #ffffff;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    transition: all 0.4s ease;
 }
 
 .skill-card p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(3, 3, 3, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s ease;
     color: #a0a0a0;
     line-height: 1.7;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0;
 }
+
+.skill-card:hover p {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.skill-card:hover::before {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.skill-card:hover h3 {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
 
 /* Portfolio Preview */
 .portfolio-preview {
