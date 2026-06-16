@@ -23,13 +23,13 @@ export default function Hero() {
   //   typeWriter();
   // }, []);
 
-  const handleFullscreen = () => {
-    if (videoRef.current) {
-      if (videoRef.current.requestFullscreen) {
-        videoRef.current.requestFullscreen();
-      }
-    }
-  };
+  // const handleFullscreen = () => {
+  //   if (videoRef.current) {
+  //     if (videoRef.current.requestFullscreen) {
+  //       videoRef.current.requestFullscreen();
+  //     }
+  //   }
+  // };
 
   return (
     <>
@@ -61,17 +61,17 @@ export default function Hero() {
               <source src="/video/AdrianLamour_Showreel.webm" type="video/webm" />
               Your browser does not support the video tag.
             </video>
-            <div className="video-overlay">
+            {/* <div className="video-overlay">
               <button 
                 className="fullscreen-btn" 
-                onClick={handleFullscreen}
+                // onClick={handleFullscreen}
                 title="Fullscreen"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
                 </svg>
               </button>
-            </div>
+            </div> */}
             {/* <div className="video-controls-hint">
               <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                 <circle cx="12" cy="12" r="10"/>

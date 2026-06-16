@@ -86,8 +86,8 @@ export default function CareerHistory() {
       if (!mounted) return;
       gsapRef.current = gsap;
 
-      const MIN_SCALE = 0.62;
-      const MAX_SCALE = 1.0;
+      const MIN_SCALE = 0.8;
+      const MAX_SCALE = 1.2;
       const SIGMA = 200;
 
       // make sure refs match length
@@ -215,21 +215,6 @@ export default function CareerHistory() {
           padding: 100px 0;
         }
 
-        .career-history .section-title {
-          display: inline-block;
-          font-size: 3rem;
-          font-weight: 700;
-          text-align: center;
-          margin-bottom: 60px;
-          color: transparent;
-          background: linear-gradient(45deg, #ffffff, #64ffda);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          position: relative;
-          z-index: 2;
-        }
-
         #stage {
           height: auto;
           overflow: visible;
@@ -251,10 +236,11 @@ export default function CareerHistory() {
         }
 
         .card {
-          width: 55vw;
-          max-width: 59vw;
+          width: 65vw;
+          max-width: 69vw;
           border-radius: 20px;
           padding: 22px 26px 28px 26px;
+          margin-bottom: 20px;
           position: relative;
           overflow: hidden;
           border: 0.5px solid rgba(255,255,255,0.1);
@@ -286,7 +272,7 @@ export default function CareerHistory() {
         }
 
         .job-title {
-          font-size: 15px;
+          font-size: 25px;
           font-weight: 600;
           color: #f7f7f7;
           letter-spacing: -0.01em;
@@ -313,7 +299,7 @@ export default function CareerHistory() {
         }
 
         .company {
-          font-size: 12px;
+          font-size: 18px;
           color: #d0d0d0;
           font-weight: 400;
           margin-bottom: 10px;
@@ -321,11 +307,19 @@ export default function CareerHistory() {
         }
 
         .desc {
-          font-size: 13px;
+          font-size: 15px;
           color: #c0c0c0;
           line-height: 1.66;
           padding-left: 14px;
         }
+
+        @media (max-width: 1024px) {
+           .card {
+              width: 80vw;
+              max-width: 84vw;
+            }
+        }
+
       `}</style>
     </section>
   );

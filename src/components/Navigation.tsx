@@ -11,7 +11,7 @@ export default function Navigation({ isMenuActive, toggleMenu, closeMenu }: Navi
         <div className="logo">Adrian Lamour</div>
         <ul className={`nav-links ${isMenuActive ? 'active' : ''}`}>
           <li><a href="#home" onClick={closeMenu}>Home</a></li>
-          <li><a href="#skills" onClick={closeMenu}>What I Do</a></li>
+          <li><a href="#skills" onClick={closeMenu}>Specialisations</a></li>
           {/* <li><a href="#portfolio" onClick={closeMenu}>Case Studies</a></li> */}
           <li><a href="#gallery-section" onClick={closeMenu}>Gallery</a></li>
           <li><a href="#career" onClick={closeMenu}>CV</a></li>

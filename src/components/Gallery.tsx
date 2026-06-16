@@ -79,7 +79,7 @@ export default function Gallery() {
 
   return (
     <section className="gallery-section" id="gallery-section">
-      {/* <h2 className="section-title">Gallery</h2> */}
+      <h2 className="section-title">Gallery</h2>
       
       {/* Filter Categories */}
       {/* <div className="gallery-filters">
